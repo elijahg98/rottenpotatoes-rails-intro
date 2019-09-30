@@ -20,3 +20,7 @@
 #title_header {
     color: black;
 }
+
+table#movies th.hilite {
+  background-color: yellow;
+}
