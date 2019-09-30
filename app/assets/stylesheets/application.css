@@ -13,13 +13,6 @@
  *= require_tree .
  *= require_self
  */
-.container {
-    color: red;
-}
-
-#title_header {
-    color: black;
-}
 
 table#movies th.hilite {
   background-color: yellow;
