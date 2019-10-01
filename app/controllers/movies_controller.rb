@@ -11,6 +11,23 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    @all_ratings = Movie.get_ratings
+    
+    if params[:sort_method].present?
+      session[:sort_method] = params[:sort_method]
+    end
+    
+    if params[:ratings].present?
+      @selected_ratings = params[:ratings]
+      session[:selected_ratings] = @selected_ratings
+    end
+    
+    @movies = Movie.all
+    
+    if session[:selected_ratings]
+      @movies = @movies.select{|movie| session[:selected_ratings].include? movie.rating}
+    end
 
     if params[:sort_method] == "title"
       @movies = Movie.order("title asc")
@@ -18,8 +35,6 @@ class MoviesController < ApplicationController
     elsif params[:sort_method] == "release_date"
       @movies = Movie.order("release_date asc")
       @date_header = "hilite"
-    else
-      @movies = Movie.all
     end
     
   end
