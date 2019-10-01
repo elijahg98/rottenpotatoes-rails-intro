@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
     end
     
     # if the user is travelling back to a page, and selected ratings have already been set, then pull the settings from the saved session and redirect the user to the right settings
-    if (session[:selected_ratings] || session[:sort_method]) && params[:sort_method].blank? && params[:ratings].blank?
+    if (session[:selected_ratings]) && params[:sort_method].blank? && params[:ratings].blank?
       @sort_method = session[:sort_method]
       @selected_ratings = session[:selected_ratings]
       redirect_to movies_path({order_by: @sort_method, ratings: @selected_ratings})
