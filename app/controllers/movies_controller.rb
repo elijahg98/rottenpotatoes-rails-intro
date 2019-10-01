@@ -23,6 +23,12 @@ class MoviesController < ApplicationController
       session[:selected_ratings] = @selected_ratings
     end
     
+    if session[:selected_ratings] && params[:sort_method].blank? && params[:ratings].blank?
+      @sort_method = session[:sort_method]
+      @selected_ratings = session[:selected_ratings]
+      redirect_to movies_path({order_by: @sort_method, ratings: @selected_ratings})
+    end
+    
     @movies = Movie.all
     
     if session[:selected_ratings]
