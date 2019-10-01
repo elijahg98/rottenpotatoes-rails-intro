@@ -12,18 +12,22 @@ class MoviesController < ApplicationController
 
   def index
     
+    # setting up the '@all_ratings' variable
     @all_ratings = Movie.get_ratings
     
+    # saving the sort to the session if the user's selected a sort method
     if params[:sort_method].present?
       session[:sort_method] = params[:sort_method]
     end
     
+    # saving the selected ratings to the session if the user's selected ratings
     if params[:ratings].present?
       @selected_ratings = params[:ratings]
       session[:selected_ratings] = @selected_ratings
     end
     
-    if session[:selected_ratings] && params[:sort_method].blank? && params[:ratings].blank?
+    # if the user is travelling back to a page, and selected ratings have already been set, then pull the settings from the saved session and redirect the user to the right settings
+    if (session[:selected_ratings] || session[:sort_method]) && params[:sort_method].blank? && params[:ratings].blank?
       @sort_method = session[:sort_method]
       @selected_ratings = session[:selected_ratings]
       redirect_to movies_path({order_by: @sort_method, ratings: @selected_ratings})
@@ -31,10 +35,12 @@ class MoviesController < ApplicationController
     
     @movies = Movie.all
     
+    # query movies that have the selected rating
     if session[:selected_ratings]
       @movies = @movies.select{|movie| session[:selected_ratings].include? movie.rating}
     end
 
+    # sorting by header property
     if params[:sort_method] == "title"
       @movies = Movie.order("title asc")
       @movie_header = "hilite"
