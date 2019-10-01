@@ -11,9 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
-    
-    @movies = Movie.all
-    
+
     if session[:sort_method] == "title"
       @movies = @movies.sort!{|a,b| a.title <=> b.title}
       @movie_header = "hilite"
