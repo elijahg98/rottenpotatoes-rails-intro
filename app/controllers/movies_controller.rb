@@ -12,10 +12,10 @@ class MoviesController < ApplicationController
 
   def index
 
-    if session[:sort_method] == "title"
+    if params[:sort_method] == "title"
       @movies = @movies.sort!{|a,b| a.title <=> b.title}
       @movie_header = "hilite"
-    elsif session[:sort_method] == "release_date"
+    elsif params[:sort_method] == "release_date"
       @movies = @movies.sort!{|a,b| a.release_date <=> b.release_date}
       @date_header = "hilite"
     else
