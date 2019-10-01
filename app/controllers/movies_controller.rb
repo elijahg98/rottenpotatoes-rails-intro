@@ -18,6 +18,8 @@ class MoviesController < ApplicationController
     elsif session[:sort_method] == "release_date"
       @movies = @movies.sort!{|a,b| a.release_date <=> b.release_date}
       @date_header = "hilite"
+    else
+      @movies = Movie.all
     end
     
   end
